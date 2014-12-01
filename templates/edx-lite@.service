@@ -1,0 +1,22 @@
+[Unit]
+Description=edX lite service
+After=etcd.service
+After=docker.service
+Requires=edx-lite-discovery@%i.service
+
+[Service]
+TimeoutStartSec=0
+
+KillMode=none
+
+EnvironmentFile=/etc/environment
+
+ExecStartPre=-/usr/bin/docker kill edx-lite%i
+ExecStartPre=-/usr/bin/docker rm edx-lite%i
+ExecStartPre=/usr/bin/docker pull appsembler/edx-lite
+ExecStart=/usr/bin/docker run --name edx-lite%i -p ${COREOS_PUBLIC_IPV4}:%i:80 appsembler/edx-lite
+
+ExecStop=/usr/bin/docker stop edx-lite%i
+
+[X-Fleet]
+X-Conflicts=edx-lite@*.service
