@@ -1,0 +1,4 @@
+ssh-add ~/.vagrant.d/insecure_private_key
+
+export FLEETCTL_TUNNEL="172.17.8.101"
+export ETCDCTL_PEERS="172.17.8.101:4001,172.17.8.102:4001,172.17.8.103:4001"
